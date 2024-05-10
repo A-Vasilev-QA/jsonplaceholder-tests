@@ -1,15 +1,16 @@
 package qa.avasilev;
 
-import org.junit.jupiter.api.Test;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static io.restassured.RestAssured.given;
 
-public class CreateWordsMap extends TestBase {
+public class PrintWordsMap extends TestBase {
 
-    public static void main(String[] args)  {
+    public static void main(String[] args) {
 
         Post[] allPosts =
                 given()
@@ -28,12 +29,12 @@ public class CreateWordsMap extends TestBase {
 
         List<Map.Entry<String, Integer>> entryList =
                 words.stream().map(string -> string.replace(",", "").toLowerCase())
-                .collect(Collectors.toMap(key -> key, val -> 1, Integer::sum))
-                .entrySet().stream()
-                .sorted((e1, e2) -> e1.getValue().compareTo(e2.getValue()) * -1)
-                .limit(10)
-                .collect(Collectors.toList());
+                        .collect(Collectors.toMap(key -> key, val -> 1, Integer::sum))
+                        .entrySet().stream()
+                        .sorted((e1, e2) -> e1.getValue().compareTo(e2.getValue()) * -1)
+                        .limit(10)
+                        .collect(Collectors.toList());
 
-        entryList.forEach(e -> System.out.println(entryList.indexOf(e)+1 + ". " + e.getKey() + " - " + e.getValue()));
+        entryList.forEach(e -> System.out.println(entryList.indexOf(e) + 1 + ". " + e.getKey() + " - " + e.getValue()));
     }
 }
